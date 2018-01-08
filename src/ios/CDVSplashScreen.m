@@ -174,6 +174,7 @@
     // this is appropriate for detecting the runtime screen environment
     device.iPhone6 = (device.iPhone && limit == 667.0);
     device.iPhone6Plus = (device.iPhone && limit == 736.0);
+    device.iPhoneX = (device.iPhone && limit == 812);
 
     return device;
 }
@@ -228,6 +229,8 @@
             {
                 imageName = [imageName stringByAppendingString:@"-Portrait"];
             }
+        } else if (device.iPhoneX) {
+            imageName = [imageName stringByAppendingString:@"-1100"];
         }
     }
 
@@ -259,6 +262,23 @@
         }
         imageName = [imageName stringByAppendingString:@"-736h"];
 
+    }
+    else if (device.iPhoneX) {
+        //support landscape
+        if (isOrientationLocked) {
+            imageName = [imageName stringByAppendingString:(supportsLandscape ? @"-Landscape" : @"-Portrait")];
+        } else {
+            switch (currentOrientation) {
+                case UIInterfaceOrientationLandscapeLeft:
+                case UIInterfaceOrientationLandscapeRight:
+                    imageName = [imageName stringByAppendingString:@"-Landscape"];
+                    break;
+                default:
+                    imageName = [imageName stringByAppendingString:@"-Portrait"];
+                    break;
+            }
+        }
+        imageName = [imageName stringByAppendingString:@"-2436h"];
     }
     else if (device.iPad)
     {   // supports landscape
